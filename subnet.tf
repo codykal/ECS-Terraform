@@ -42,3 +42,12 @@ resource "aws_subnet" "private2" {
     ECSProject = "PrivateSubnet2"
   }
 }
+
+resource "aws_db_subnet_group" "privategroup" {
+  name       = "main"
+  subnet_ids = [aws_subnet.private1.id, aws_subnet.private2.id]
+
+  tags = {
+    ECSProject = "DB_SubnetGroup"
+  }
+}
