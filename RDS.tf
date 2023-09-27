@@ -8,7 +8,7 @@ resource "aws_db_instance" "MySQL-Instance" {
   db_name              = "rds-mysql"
   instance_class       = "db.t2.micro"
   engine               = "mysql"
-  engine_version       = "8.0.27"
+  engine_version       = "8.0.33"
   username             = jsondecode(data.aws_secretsmanager_secret_version.db_credentials.secret_string)["username"]
   password             = jsondecode(data.aws_secretsmanager_secret_version.db_credentials.secret_string)["password"]
   db_subnet_group_name = "aws_db_subnet_group.privategroup"
