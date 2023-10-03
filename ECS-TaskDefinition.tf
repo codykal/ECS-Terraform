@@ -2,6 +2,7 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-myPHPAdmin" {
   family                   = "ECS-TaskDefinition-myPHPAdmin"
   execution_role_arn       = "arn:aws:iam::913087840426:role/ecsTaskExecutionRole"
   cpu                      = 224
+  network_mode = "bridged"
   requires_compatibilities = ["EC2"]
   runtime_platform {
     operating_system_family = "LINUX"
@@ -39,6 +40,7 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-metabase" {
   execution_role_arn       = "arn:aws:iam::913087840426:role/ecsTaskExecutionRole"
   cpu                      = 800
   memory                   = 800
+  network_mode = "bridged"
   requires_compatibilities = ["EC2"]
   runtime_platform {
     operating_system_family = "LINUX"

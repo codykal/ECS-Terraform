@@ -13,11 +13,11 @@ resource "aws_launch_template" "ECS-Cluster-LT" {
     name = "ecsInstanceRole"
   }
 
-  user_data = <<-EOF
-         #!/bin/bash
-         echo ECS_CLUSTER=${aws_ecs_cluster.ECSProject-Cluster.name} >> /etc/ecs/ecs.config
-         EOF
-
+user_data = base64encode(<<-EOF
+           #!/bin/bash
+           echo ECS_CLUSTER=${aws_ecs_cluster.ECSProject-Cluster.name} >> /etc/ecs/ecs.config
+           EOF
+)
   tags = {
     ECSProject = "ASG-LT"
   }

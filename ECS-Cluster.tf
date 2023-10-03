@@ -1,11 +1,11 @@
 
 // Base Cluster definition
 resource "aws_ecs_cluster" "ECSProject-Cluster" {
-  name = "ECSProject-Cluster"
+  name = "Project-Cluster"
 }
 
 resource "aws_ecs_capacity_provider" "ECSProject-ECS-provider" {
-  name = "ECS-Capacity-Provider"
+  name = "Capacity-Provider"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn = aws_autoscaling_group.ECS-asg.arn
