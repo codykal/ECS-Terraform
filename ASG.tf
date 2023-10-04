@@ -2,7 +2,7 @@
 // Launch Template for ECS Cluster, sets image to Amazon Linux 2, and in the user data block, sets up the connection to the ECS cluster.
 resource "aws_launch_template" "ECS-Cluster-LT" {
   name          = "ECS-Launch-Configuration"
-  image_id      = "ami-038937b3d6616035f"
+  image_id      = "ami-080b1e312f29aebbb"
   instance_type = "t2.micro"
 
   key_name               = "Project3-SSHKey"
@@ -13,11 +13,11 @@ resource "aws_launch_template" "ECS-Cluster-LT" {
     name = "ecsInstanceRole"
   }
 
-user_data = base64encode(<<-EOF
+  user_data = base64encode(<<-EOF
            #!/bin/bash
            echo ECS_CLUSTER=${aws_ecs_cluster.ECSProject-Cluster.name} >> /etc/ecs/ecs.config
            EOF
-)
+  )
   tags = {
     ECSProject = "ASG-LT"
   }

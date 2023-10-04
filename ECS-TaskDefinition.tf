@@ -2,7 +2,7 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-myPHPAdmin" {
   family                   = "ECS-TaskDefinition-myPHPAdmin"
   execution_role_arn       = "arn:aws:iam::913087840426:role/ecsTaskExecutionRole"
   cpu                      = 224
-  network_mode = "bridged"
+  network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
   runtime_platform {
     operating_system_family = "LINUX"
@@ -38,9 +38,9 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-myPHPAdmin" {
 resource "aws_ecs_task_definition" "ECS-TaskDefinition-metabase" {
   family                   = "ECS-TaskDefinition-metabase"
   execution_role_arn       = "arn:aws:iam::913087840426:role/ecsTaskExecutionRole"
-  cpu                      = 800
-  memory                   = 800
-  network_mode = "bridged"
+  cpu                      = 700
+  memory                   = 700
+  network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
   runtime_platform {
     operating_system_family = "LINUX"
@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-metabase" {
   container_definitions = jsonencode([
     {
       name  = "metabase"
-      image = "docker.io/metabase:latest"
+      image = "docker.io/metabase/metabase:latest"
       mountPoints = [{
         sourceVolume  = "metabase-volume"
         containerPath = "/mnt"
@@ -61,8 +61,8 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-metabase" {
           value = "/mnt/metabase.db"
         }
       ]
-      cpu       = 800
-      memory    = 800
+      cpu       = 700
+      memory    = 700
       essential = true
       portMappings = [
         {
