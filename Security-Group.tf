@@ -32,14 +32,14 @@ resource "aws_security_group" "ECS-Instance-SG" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"]]
+    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"],jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress2"]]
   }
 
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"]]
+    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"],jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress2"]]
   }
 
   // myphpadmin container port
@@ -47,7 +47,7 @@ resource "aws_security_group" "ECS-Instance-SG" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"]]
+    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"],jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress2"]]
   }
 
   // Metabase container port
@@ -55,7 +55,14 @@ resource "aws_security_group" "ECS-Instance-SG" {
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
-    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"]]
+    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"],jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress2"]]
+  }
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = -1
+    security_groups = [aws_security_group.ALB-SG.id]
   }
 
   egress {
@@ -88,5 +95,36 @@ resource "aws_security_group" "EFS-SG" {
     cidr_blocks = ["0.0.0.0/0"]
 
   }
+
+}
+
+//ALB Security Group
+resource "aws_security_group" "ALB-SG" {
+  name = "ALB-SecurityGroup"
+  vpc_id = aws_vpc.ECSProject-VPC.id
+
+  ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"],jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress2"]]
+  }
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress"],jsondecode(data.aws_secretsmanager_secret_version.ip_address.secret_string)["ipaddress2"]]
+  }
+
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+
 
 }
