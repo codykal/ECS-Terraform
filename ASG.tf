@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "ECS-asg" {
   desired_capacity    = 1
   max_size            = 1
   min_size            = 1
-  
+
   target_group_arns = [aws_lb_target_group.ALB-TG-myphpadmin.arn, aws_lb_target_group.ALB-TG-metabase.arn]
 
   launch_template {

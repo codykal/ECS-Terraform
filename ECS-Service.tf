@@ -4,10 +4,9 @@ resource "aws_ecs_service" "ECS-Service-myPHPAdmin" {
   task_definition = aws_ecs_task_definition.ECS-TaskDefinition-myPHPAdmin.arn
   desired_count   = 1
 
-  # network_configuration {
-  #   subnets         = [aws_subnet.public1.id]
-  #   security_groups = [aws_security_group.ECS-Instance-SG.id]
-  # }
+    // Changed this to allow for downtime if not enough capacity for rolling update.
+  deployment_maximum_percent = 200
+  deployment_minimum_healthy_percent = 0
 
   force_new_deployment = true
 
@@ -26,10 +25,9 @@ resource "aws_ecs_service" "ECS-Service-metabase" {
   task_definition = aws_ecs_task_definition.ECS-TaskDefinition-metabase.arn
   desired_count   = 1
 
-  # network_configuration {
-  #   subnets         = [aws_subnet.public1.id]
-  #   security_groups = [aws_security_group.ECS-Instance-SG.id]
-  # }
+  // Changed this to allow for downtime if not enough capacity for rolling update.
+  deployment_maximum_percent = 200
+  deployment_minimum_healthy_percent = 0
 
   force_new_deployment = true
 

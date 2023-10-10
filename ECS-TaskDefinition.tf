@@ -1,6 +1,6 @@
 resource "aws_ecs_task_definition" "ECS-TaskDefinition-myPHPAdmin" {
   family                   = "ECS-TaskDefinition-myPHPAdmin"
-  execution_role_arn       = "arn:aws:iam::913087840426:role/ecsTaskExecutionRole"
+  execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   cpu                      = 224
   network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
@@ -22,6 +22,16 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-myPHPAdmin" {
       cpu       = 224
       memory    = 182
       essential = true
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
+          "awslogs-region"        = "us-west-2"
+          "awslogs-stream-prefix" = "ecs"
+        }
+      }
+
       portMappings = [
         {
           containerPort = 80
@@ -37,7 +47,7 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-myPHPAdmin" {
 
 resource "aws_ecs_task_definition" "ECS-TaskDefinition-metabase" {
   family                   = "ECS-TaskDefinition-metabase"
-  execution_role_arn       = "arn:aws:iam::913087840426:role/ecsTaskExecutionRole"
+  execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   cpu                      = 700
   memory                   = 700
   network_mode             = "bridge"
@@ -64,6 +74,16 @@ resource "aws_ecs_task_definition" "ECS-TaskDefinition-metabase" {
       cpu       = 700
       memory    = 700
       essential = true
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name
+          "awslogs-region"        = "us-west-2"
+          "awslogs-stream-prefix" = "ecs"
+        }
+      }
+
       portMappings = [
         {
           containerPort = 3000
