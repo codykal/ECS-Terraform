@@ -4,8 +4,8 @@ resource "aws_ecs_service" "ECS-Service-myPHPAdmin" {
   task_definition = aws_ecs_task_definition.ECS-TaskDefinition-myPHPAdmin.arn
   desired_count   = 1
 
-    // Changed this to allow for downtime if not enough capacity for rolling update.
-  deployment_maximum_percent = 200
+  // Changed this to allow for downtime if not enough capacity for rolling update.
+  deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 0
 
   force_new_deployment = true
@@ -26,7 +26,7 @@ resource "aws_ecs_service" "ECS-Service-metabase" {
   desired_count   = 1
 
   // Changed this to allow for downtime if not enough capacity for rolling update.
-  deployment_maximum_percent = 200
+  deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 0
 
   force_new_deployment = true

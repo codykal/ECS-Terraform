@@ -2,6 +2,7 @@ resource "aws_lb" "LoadBalancer" {
   name               = "LoadBalancer"
   internal           = false
   load_balancer_type = "application"
+  drop_invalid_header_fields = true
   security_groups    = [aws_security_group.ALB-SG.id]
   subnets            = [aws_subnet.public1.id, aws_subnet.public2.id]
 }
