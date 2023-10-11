@@ -10,7 +10,7 @@ terraform {
     bucket         = "ecsproject-tfstatebucket"
     key            = "ECSProject/terraform.tfstate"
     region         = "us-west-2"
-    profile        = "administrator"
+    profile        = "default"
     encrypt        = true
     dynamodb_table = "my-lock-table"
 
@@ -21,7 +21,7 @@ terraform {
 
 provider "aws" {
   region  = "us-west-2"
-  profile = "administrator"
+  profile = "default"
 }
 
 

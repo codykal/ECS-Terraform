@@ -14,11 +14,10 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: setup AWS CLI
-      run: |
-        mkdir ~/.aws/credentials
-        echo '[administrator]' >> ~/.aws/credentials
-        echo 'aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}' >> ~/.aws/credentials
-        echo 'aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}' >> ~/.aws/credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
 
     - name: Terraform Initialize
@@ -26,3 +25,5 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan
+
+      
